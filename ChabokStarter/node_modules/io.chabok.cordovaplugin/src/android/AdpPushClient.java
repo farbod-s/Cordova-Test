@@ -109,7 +109,7 @@ public class AdpPushClient extends CordovaPlugin {
         Class activityClass = this.cordova.getActivity().getClass();
         Context context = getApplicationContext();
 
-        AdpPushClient chabok = AdpPushClient.init(
+        com.adpdigital.push.AdpPushClient chabok = com.adpdigital.push.AdpPushClient.init(
                 context,
                 activityClass,
                 appId,
@@ -135,12 +135,12 @@ public class AdpPushClient extends CordovaPlugin {
 
     public void registerAsGuest(CallbackContext callbackContext) {
         this.onRegisterCallbackContext = callbackContext;
-        AdpPushClient.get().registerAsGuest();
+        com.adpdigital.push.AdpPushClient.get().registerAsGuest();
     }
 
     public void register(String userId, CallbackContext callbackContext) {
         this.onRegisterCallbackContext = callbackContext;
-        AdpPushClient.get().register(userId);
+        com.adpdigital.push.AdpPushClient.get().register(userId);
     }
 
     public void publish(JSONObject message, CallbackContext callbackContext) {
@@ -172,7 +172,7 @@ public class AdpPushClient extends CordovaPlugin {
                 msg.setData(dataMap);
             }
 
-            AdpPushClient.get().publish(msg, new Callback() {
+            com.adpdigital.push.AdpPushClient.get().publish(msg, new Callback() {
                 @Override
                 public void onSuccess(Object o) {
                     callbackContext.success("Message published");
@@ -190,15 +190,15 @@ public class AdpPushClient extends CordovaPlugin {
     }
 
     public void unregister() {
-        AdpPushClient.get().unregister();
+        com.adpdigital.push.AdpPushClient.get().unregister();
     }
 
     public void track(String trackName, JSONObject data) {
-        AdpPushClient.get().track(trackName, data);
+        com.adpdigital.push.AdpPushClient.get().track(trackName, data);
     }
 
     public void addTag(String tagName, CallbackContext callbackContext) {
-        AdpPushClient.get().addTag(tagName, new Callback() {
+        com.adpdigital.push.AdpPushClient.get().addTag(tagName, new Callback() {
             @Override
             public void onSuccess(Object o) {
                 android.util.Log.d(TAG, "The addTags onSuccess: called");
@@ -214,7 +214,7 @@ public class AdpPushClient extends CordovaPlugin {
     }
 
     public void removeTag(String tagName, CallbackContext callbackContext) {
-        AdpPushClient.get().removeTag(tagName, new Callback() {
+        com.adpdigital.push.AdpPushClient.get().removeTag(tagName, new Callback() {
             @Override
             public void onSuccess(Object o) {
                 android.util.Log.d(TAG, "The removeTag onSuccess: called");
@@ -230,7 +230,7 @@ public class AdpPushClient extends CordovaPlugin {
     }
 
     public void setDefaultTracker(String defaultTracker) {
-        AdpPushClient.get().setDefaultTracker(defaultTracker);
+        com.adpdigital.push.AdpPushClient.get().setDefaultTracker(defaultTracker);
     }
 
     public void appWillOpenUrl(String link) {
@@ -239,20 +239,20 @@ public class AdpPushClient extends CordovaPlugin {
         }
 
         Uri uri = Uri.parse(link);
-        AdpPushClient.get().appWillOpenUrl(uri);
+        com.adpdigital.push.AdpPushClient.get().appWillOpenUrl(uri);
     }
 
     public void setUserInfo(JSONObject userInfo) {
         try {
             HashMap<String, Object> userInfoMap = (HashMap<String, Object>) jsonToMap(userInfo);
-            AdpPushClient.get().setUserInfo(userInfoMap);
+            com.adpdigital.push.AdpPushClient.get().setUserInfo(userInfoMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public String getUserId(CallbackContext callbackContext) {
-        String userId = AdpPushClient.get().getUserId();
+        String userId = com.adpdigital.push.AdpPushClient.get().getUserId();
 
         if (callbackContext != null) {
             if (userId != null) {
@@ -266,7 +266,7 @@ public class AdpPushClient extends CordovaPlugin {
     }
 
     public String getInstallation(CallbackContext callbackContext) {
-        String installationId = AdpPushClient.get().getUserId();
+        String installationId = com.adpdigital.push.AdpPushClient.get().getUserId();
 
         if (callbackContext != null) {
             if (installationId != null) {
@@ -280,7 +280,7 @@ public class AdpPushClient extends CordovaPlugin {
     }
 
     public void resetBadge() {
-        AdpPushClient.get().resetBadge();
+        com.adpdigital.push.AdpPushClient.get().resetBadge();
     }
 
     public void setOnMessageCallbackContext(CallbackContext callbackContext) {

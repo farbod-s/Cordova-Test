@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="io.chabok.cordovaplugin"
-        version="1.0.0"
+        version="1.0.6"
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android">
     <name>AdpPushClient</name>
     <js-module name="AdpPushClient"
                src="www/AdpPushClient.js">
-        <clobbers target="cordova.plugins.AdpPushClient" />
+        <clobbers target="AdpPushClient" />
     </js-module>
     <platform name="android">
         <framework src="me.leolin:ShortcutBadger:1.1.22@aar" />
