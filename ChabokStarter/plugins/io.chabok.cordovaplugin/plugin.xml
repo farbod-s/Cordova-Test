@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="io.chabok.cordovaplugin"
+        version="1.0.0"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>AdpPushClient</name>
+    <js-module name="AdpPushClient"
+               src="www/AdpPushClient.js">
+        <clobbers target="cordova.plugins.AdpPushClient" />
+    </js-module>
+    <platform name="android">
+        <framework src="me.leolin:ShortcutBadger:1.1.22@aar" />
+        <framework src="com.google.android.gms:play-services-gcm:10.2.6" />
+        <framework src="com.android.installreferrer:installreferrer:1.0" />
+        <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
+        <source-file framework="true"
+                     src="src/android/libs/chabok-lib-2.16.0.aar"
+                     target-dir="libs"/>
+
+        <config-file parent="/*"
+                     target="res/xml/config.xml">
+            <feature name="AdpPushClient">
+                <param name="android-package"
+                       value="io.chabok.cordovaplugin.AdpPushClient" />
+            </feature>
+        </config-file>
+        <config-file parent="/*"
+                     target="AndroidManifest.xml" />
+        <source-file src="src/android/AdpPushClient.java"
+                     target-dir="src/io/chabok/cordovaplugin/AdpPushClient" />
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <meta-data android:name="com.adpdigital.push.client.PlatformType"
+                       android:value="cordova" />
+            <receiver
+                    android:name="com.google.android.gms.gcm.GcmReceiver"
+                    android:enabled="true"
+                    android:exported="true"
+                    android:permission="com.google.android.c2dm.permission.SEND">
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                    <category android:name="$PACKAGE_NAME" />
+                </intent-filter>
+            </receiver>
+            <receiver
+                    android:name="com.adpdigital.push.ChabokReferrerReceiver"
+                    android:permission="android.permission.INSTALL_PACKAGES"
+                    android:exported="true">
+                <intent-filter>
+                    <action android:name="com.android.vending.INSTALL_REFERRER" />
+                </intent-filter>
+            </receiver>
+        </config-file>
+    </platform>
+    <platform name="ios">
+        <config-file parent="/*"
+                     target="config.xml">
+            <feature name="AdpPushClient">
+                <param name="ios-package"
+                       value="AdpPushClient" />
+            </feature>
+        </config-file>
+        <source-file src="src/ios/AdpPushClient.m" />
+        <source-file src="src/ios/AppDelegate+AdpPushClient.m" />
+        <header-file src="src/ios/AppDelegate+AdpPushClient.h" />
+
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>remote-notification</string>
+            </array>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+            <dict>
+                <key>NSAllowsArbitraryLoads</key>
+                <true/>
+            </dict>
+        </config-file>
+        <podspec>
+            <config>
+                <source url="https://github.com/CocoaPods/Specs.git"/>
+            </config>
+            <pods use-frameworks="true">
+                <pod name="ChabokPush" spec="~> 1.19.0"/>
+            </pods>
+        </podspec>
+    </platform>
+</plugin>

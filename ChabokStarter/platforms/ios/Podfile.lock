@@ -1,0 +1,16 @@
+PODS:
+  - ChabokPush (1.19.0)
+
+DEPENDENCIES:
+  - ChabokPush (~> 1.19.0)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - ChabokPush
+
+SPEC CHECKSUMS:
+  ChabokPush: da4a7c52d2fac35b910c428aa49459efd49f423c
+
+PODFILE CHECKSUM: 9777a62896fb9ffd60d981cb3a2da78f1ce849be
+
+COCOAPODS: 1.8.4

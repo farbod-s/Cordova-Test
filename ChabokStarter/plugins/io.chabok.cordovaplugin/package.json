@@ -1,0 +1,55 @@
+{
+  "_from": "io.chabok.cordovaplugin",
+  "_id": "io.chabok.cordovaplugin@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-jL2fR/4wCUa+tOxwgWt83LJZrTiSWGUMTDOSR0M5+iNqBUu8E8hhc6qIVH3Ctnr3f1mQqR1YOzmG0SP2JtvLnQ==",
+  "_location": "/io.chabok.cordovaplugin",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "io.chabok.cordovaplugin",
+    "name": "io.chabok.cordovaplugin",
+    "escapedName": "io.chabok.cordovaplugin",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/io.chabok.cordovaplugin/-/io.chabok.cordovaplugin-1.0.0.tgz",
+  "_shasum": "3e4e8b2957433777b59047f22b570013411c664c",
+  "_spec": "io.chabok.cordovaplugin",
+  "_where": "/Users/farbod/Documents/Github/Cordova-Test/ChabokStarter",
+  "author": {
+    "name": "Farbod Samsamipour"
+  },
+  "bugs": {
+    "url": "https://github.com/farbod-s/Cordova-Plugin/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "io.chabok.cordovaplugin",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "Cordova wrapper for Chabok SDK",
+  "homepage": "https://github.com/farbod-s/Cordova-Plugin#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "license": "Apache-2.0",
+  "name": "io.chabok.cordovaplugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farbod-s/Cordova-Plugin.git"
+  },
+  "version": "1.0.0"
+}
