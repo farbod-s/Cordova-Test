@@ -3,8 +3,8 @@ var exec = require('cordova/exec');
 const  bridgeName = 'AdpPushClient';
 var AdpPushClient = function () {}
 
-AdpPushClient.prototype.setDevelopmentMode = function (devMode, success, error) {
-    exec(success, error, bridgeName, 'setDevelopmentMode', [devMode]);
+AdpPushClient.prototype.configureEnvironment = function (devMode, success, error) {
+    exec(success, error, bridgeName, 'configureEnvironment', [devMode]);
 };
 
 AdpPushClient.prototype.login = function (userId, success, error) {

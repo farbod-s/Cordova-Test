@@ -49,9 +49,9 @@ public class AdpPushClient extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         android.util.Log.d(TAG, "----------- execute: action = " + action + " , args = " + args);
 
-        if (action.equals("setDevelopmentMode")) {
+        if (action.equals("configureEnvironment")) {
             boolean devMode = args.getBoolean(0);
-            setDevelopmentMode(devMode, callbackContext);
+            configureEnvironment(devMode, callbackContext);
             return true;
         } else if (action.equals("login")) {
             String userId = args.getString(0);
@@ -112,7 +112,7 @@ public class AdpPushClient extends CordovaPlugin {
         return false;
     }
 
-    public void setDevelopmentMode(boolean devMode, CallbackContext callbackContext) {
+    public void configureEnvironment(boolean devMode, CallbackContext callbackContext) {
         com.adpdigital.push.AdpPushClient.setApplicationContext(getApplicationContext());
         com.adpdigital.push.AdpPushClient.configureEnvironment(devMode ? Environment.SANDBOX : Environment.PRODUCTION);
         com.adpdigital.push.AdpPushClient.setLogLevel(LogLevel.VERBOSE);

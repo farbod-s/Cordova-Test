@@ -21,22 +21,21 @@ apply plugin: 'com.android.application'
 
 buildscript {
     repositories {
+        mavenCentral()
         google()
         jcenter()
-        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:3.3.0'
     }
 }
 
 // Allow plugins to declare Maven dependencies via build-extras.gradle.
 allprojects {
     repositories {
-        google()
-        jcenter()
         mavenCentral()
+        jcenter()
     }
 }
 

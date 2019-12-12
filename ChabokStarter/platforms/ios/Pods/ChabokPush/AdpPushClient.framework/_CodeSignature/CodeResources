@@ -10,27 +10,31 @@
 		</data>
 		<key>Headers/AdpPushClient.h</key>
 		<data>
-		jN+9+7NK67EpL7f0PFoGQ539l/g=
+		hy5/e+mONDgdHDy276zmjF/gbp4=
 		</data>
 		<key>Headers/ChabokEvent.h</key>
 		<data>
 		RYQJcxklX2me3RIh6+oexl9antA=
 		</data>
+		<key>Headers/ChabokLogger.h</key>
+		<data>
+		Xhi60aXxiVJ13yz4jvK2989D7vM=
+		</data>
 		<key>Headers/CoreGeoLocation.h</key>
 		<data>
-		d6+m6wZsLCBIUqZqk1yudCO1uvY=
-		</data>
-		<key>Headers/DeliveryMessage.h</key>
-		<data>
-		of7ICC1M/pJUzQqz9qo/Zo5chZ4=
+		jRFdDn0D7SWccrdLx4z4e5lVpkU=
 		</data>
 		<key>Headers/EventMessage.h</key>
 		<data>
 		vgK6B2yHnzBZ6lQLHCOy3+4Wq68=
 		</data>
+		<key>Headers/PushClientDeliveryMessage.h</key>
+		<data>
+		ttMKp6hYK1rz1S3ceYw60A6ajKY=
+		</data>
 		<key>Headers/PushClientManager.h</key>
 		<data>
-		+oFOnJqpvjyFGqngIYUvnjoQkGc=
+		caOasacdKgzTmGaFIYMQN/BPpLo=
 		</data>
 		<key>Headers/PushClientMessage.h</key>
 		<data>
@@ -42,7 +46,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		bpUbxtAqT8tz9OcEv/7cjbHGRJ4=
+		14hNBxa9/aPwjXYxOsDr8fD3jEs=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -66,11 +70,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			jN+9+7NK67EpL7f0PFoGQ539l/g=
+			hy5/e+mONDgdHDy276zmjF/gbp4=
 			</data>
 			<key>hash2</key>
 			<data>
-			BMUray6TDbSUa04cnOPM9AUMgyS+NT2uH+ODVyaUMNo=
+			wOLmIS6084xahzqOn4Vg7yCUNy+26tGywSmB1h6c9zs=
 			</data>
 		</dict>
 		<key>Headers/ChabokEvent.h</key>
@@ -84,26 +88,26 @@
 			mdi3J/U4n6ZdsPSZe3Ri25AqBwsYS6GEo5/s+SnlUA8=
 			</data>
 		</dict>
+		<key>Headers/ChabokLogger.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Xhi60aXxiVJ13yz4jvK2989D7vM=
+			</data>
+			<key>hash2</key>
+			<data>
+			JVbhAkQViYSk5K5Dr5Fwa1Q604XeljpZMiUkt+P5EbM=
+			</data>
+		</dict>
 		<key>Headers/CoreGeoLocation.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			d6+m6wZsLCBIUqZqk1yudCO1uvY=
+			jRFdDn0D7SWccrdLx4z4e5lVpkU=
 			</data>
 			<key>hash2</key>
 			<data>
-			wrCkOqYQXMMm6D9tcUW/JYj+UNtUOKvj5qLapVxMm9o=
-			</data>
-		</dict>
-		<key>Headers/DeliveryMessage.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			of7ICC1M/pJUzQqz9qo/Zo5chZ4=
-			</data>
-			<key>hash2</key>
-			<data>
-			rOXqFp2BhzCPj5I6//FcMaDBOSvfDSPHZFB4YgyKoP4=
+			ySxaewYMebJNEXnLfh4iddjivC/0/8aSjQbbvD8xlIg=
 			</data>
 		</dict>
 		<key>Headers/EventMessage.h</key>
@@ -117,15 +121,26 @@
 			rmPm7lIhfBJBuS0QuKKSaCJlwkpADiVYO8SJizy/mv4=
 			</data>
 		</dict>
+		<key>Headers/PushClientDeliveryMessage.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ttMKp6hYK1rz1S3ceYw60A6ajKY=
+			</data>
+			<key>hash2</key>
+			<data>
+			a64Xxur7Bn/kLsmkvhXJUAhMItviKMJ17A/xc6pMgV0=
+			</data>
+		</dict>
 		<key>Headers/PushClientManager.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			+oFOnJqpvjyFGqngIYUvnjoQkGc=
+			caOasacdKgzTmGaFIYMQN/BPpLo=
 			</data>
 			<key>hash2</key>
 			<data>
-			3q3asaPD7EpIPwAaFzznwZCz6cO6rgNLf0kHhqaSU4o=
+			lX2MMOTqTylKKUeUTPDac/epmltFs7GQQPJ0uJqdHuE=
 			</data>
 		</dict>
 		<key>Headers/PushClientMessage.h</key>
@@ -164,7 +179,7 @@
 	</dict>
 	<key>rules</key>
 	<dict>
-		<key>^</key>
+		<key>^.*</key>
 		<true/>
 		<key>^.*\.lproj/</key>
 		<dict>
@@ -195,24 +210,12 @@
 			<key>weight</key>
 			<real>11</real>
 		</dict>
-		<key>^</key>
-		<dict>
-			<key>weight</key>
-			<real>20</real>
-		</dict>
 		<key>^(.*/)?\.DS_Store$</key>
 		<dict>
 			<key>omit</key>
 			<true/>
 			<key>weight</key>
 			<real>2000</real>
-		</dict>
-		<key>^(Frameworks|SharedFrameworks|PlugIns|Plug-ins|XPCServices|Helpers|MacOS|Library/(Automator|Spotlight|LoginItems))/</key>
-		<dict>
-			<key>nested</key>
-			<true/>
-			<key>weight</key>
-			<real>10</real>
 		</dict>
 		<key>^.*</key>
 		<true/>
@@ -248,13 +251,6 @@
 			<true/>
 			<key>weight</key>
 			<real>20</real>
-		</dict>
-		<key>^[^/]+$</key>
-		<dict>
-			<key>nested</key>
-			<true/>
-			<key>weight</key>
-			<real>10</real>
 		</dict>
 		<key>^embedded\.provisionprofile$</key>
 		<dict>

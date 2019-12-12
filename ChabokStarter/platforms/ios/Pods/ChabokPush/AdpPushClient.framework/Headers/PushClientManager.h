@@ -13,10 +13,11 @@
 #import "CoreGeoLocation.h"
 #import "EventMessage.h"
 #import "ChabokEvent.h"
+#import "ChabokLogger.h"
 
 @import UserNotifications;
 
-@class PushClientMessage,PushClientManager,DeliveryMessage;
+@class PushClientMessage,PushClientManager,PushClientDeliveryMessage;
 
 /*!
  * Enum for Server Reachability network
@@ -28,6 +29,12 @@ typedef NS_ENUM(NSUInteger, PushClientServerReachabilityNetworkType){
     PushClientServerReachabilityCelluarNetworkType,
     /** Push Server Reachable via Wi Fi network */
     PushClientServerReachabilityWifiNetworkType
+};
+
+
+typedef NS_ENUM(NSUInteger, ChabokEnvironmentType){
+    Sandbox,
+    Production
 };
 
 /*!
@@ -73,6 +80,9 @@ typedef NS_ENUM(NSInteger, PushClientErrorCode) {
     kPushClientNoInternetConnectionErrorCode =-5030,
 };
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
+
 typedef void (^PushClientMessageHandlerBlock)(PushClientMessage *message);
 
 typedef void (^PushClientMessageUILocalNotificationHandlerBlock)(PushClientMessage *message);
@@ -86,6 +96,8 @@ typedef void (^PushClientServerReachabilityCallBackBlock)(
 typedef void (^PushClientServerConnectionStateHandlerBlock)(void);
 
 typedef void (^PushClientRegistrationHandlerBlock)(BOOL isRegistered,NSString *userId,NSError *error) ;
+
+typedef void (^PushClientLoginHandlerBlock)(BOOL loggedIn, NSError *error) ;
 
 
 typedef void (^PushClientVerificationHandlerBlock)(BOOL sent,NSError *error);
@@ -136,15 +148,19 @@ extern NSString *const kPushClientDetectAppNewInstall;
 /* ChabokPush detect app was Launched */
 extern NSString *const kPushClientDetectAppWasLaunched;
 
+#pragma clang diagnostic pop
 
 /** Push Client Manager delegate gives your application control over the
  @note handleEvent and newMessage are required interfaces, the rest is optional
  */
 @protocol PushClientManagerDelegate <NSObject>
 @optional
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
 - (void)pushClientManagerDidReceivedMessage:(PushClientMessage *)message;
 
-- (void)pushClientManagerDidReceivedDelivery:(DeliveryMessage *)delivery;
+- (void)pushClientManagerDidReceivedDelivery:(PushClientDeliveryMessage *)delivery;
 
 - (void)pushClientManagerDidReceivedEventMessage:(EventMessage *)eventMessage;
 
@@ -189,6 +205,8 @@ extern NSString *const kPushClientDetectAppWasLaunched;
 
 - (BOOL) chabokDeeplinkResponse:(NSURL *_Nonnull)deeplink;
 
+#pragma clang diagnostic pop
+
 @end
 
 
@@ -209,8 +227,10 @@ NS_CLASS_AVAILABLE_IOS(7_0)
  * @param flag option for switch remote to local server YES means Local Server and No Remote Server
  * @note local server not support ssl connection dont set useSSLConnection with true value
  */
-+ (void)setDevelopment:(BOOL)flag;
++ (void)setDevelopment:(BOOL)flag DEPRECATED_MSG_ATTRIBUTE("This method has been replaced with configureEnvironment method");
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
 
 /*!
  *@discription The Singletone of PushClientManager, Use this for avoid doublicate connection.
@@ -228,17 +248,17 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 */
 + (instancetype)defaultManager;
 
-
++ (void) disableSdk;
 
 + (void)resetBadge;
 
 
-
+- (instancetype) init NS_UNAVAILABLE;
 /**
  The UserId which store disk or runtime
  */
 @property (nonatomic, readonly) NSString *userId;
-
+#pragma clang diagnostic pop
 
 
 /**
@@ -302,6 +322,8 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 */
 @property (nonatomic,readwrite) BOOL deliveryChannelEnabeled;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
 /*!
  * @description messageHandler is block type which is used as callback when new message received
  * @return object of "PushClientMessage" Class
@@ -387,11 +409,9 @@ NS_CLASS_AVAILABLE_IOS(7_0)
  */
 @property (nonatomic, weak) id<PushClientManagerDelegate> delegate;
 
-/*!
- * @description enable to show SDK logs.
- * Note: Please, Just turn it on when using in debugging time
- */
-@property (nonatomic) BOOL enableLog;
+@property (nonatomic, assign) ChabokLogLevel logLevel;
+
+-(void) setEnableRealtime:(BOOL) disableRealtime;
 
 /*!
  * @description addDelegate method purpose for multi delegation and callback support,
@@ -427,6 +447,7 @@ NS_CLASS_AVAILABLE_IOS(7_0)
  
  */
 - (void) reset;
+
 /*
  * =============================================================
  * =========================================== Registration APIs
@@ -442,12 +463,15 @@ NS_CLASS_AVAILABLE_IOS(7_0)
  * if methods return no check failureError or manager callBack registration fail
  * in -pushClientManagerDidFailRegisterUser:error or registrationBlock property
  */
-- (BOOL)registerApplication:(NSString *)appId
-                     apiKey:(NSString *)apiKey
-                   userName:(NSString *)userName
-                   password:(NSString *)password;
 
+- (BOOL)initWithAppId:(NSString *)appId
+               apiKey:(NSString *)apiKey
+             username:(NSString *)username
+             password:(NSString *)password;
 
+- (BOOL) configureEnvironment:(ChabokEnvironmentType) environment;
+- (BOOL) configureEnvironment:(ChabokEnvironmentType) environment
+                  withGuestId:(NSString *) guestId;
 /**
  For tracking pre-install campaigns
 
@@ -455,40 +479,14 @@ NS_CLASS_AVAILABLE_IOS(7_0)
  */
 - (void)setDefaultTracker:(NSString *) defaultTracker;
 
-/*!
- * @description register userId in server
- * @param userId value of username or userphone
- * @return boolean value for success registration validation and process or not
- * if methods return no check failureError or manager callBack registration fail
- * in -pushClientManagerDidFailRegisterUser:error or registrationBlock property
- */
-- (BOOL)registerUser:(NSString *)userId;
+- (BOOL) login:(NSString *) userId;
+- (BOOL) login:(NSString *) userId hash:(NSString *) hash;
+- (BOOL) login:(NSString *) userId tagName:(NSString *) tagName;
+- (BOOL) login:(NSString *) userId userAttributes:(NSDictionary *) attributes;
+- (BOOL) login:(NSString *) userId handler:(PushClientLoginHandlerBlock) handler;
+- (BOOL) login:(NSString *) userId event:(NSString *) eventName data:(NSDictionary *) data;
 
-- (BOOL)registerUser:(NSString *)userId registrationHandler:(PushClientRegistrationHandlerBlock)registrationBlock;
-
-
-
-- (BOOL)registerUser:(NSString *)userId channels:(NSArray *)channels;
-
-- (BOOL)registerUser:(NSString *)userId
-            channels:(NSArray *)channels
- registrationHandler:(PushClientRegistrationHandlerBlock)registrationBlock;
-
-/**
- This method is used for applications with guest users, and tracking installs on app launch (just like Adjust).
-
- @return If true guest successfully registered.
- */
-- (BOOL) registerAsGuest;
-/**
- This method is used for applications with guest users, and tracking installs on app launch (just like Adjust).
-
- @param guestId is your custom id for registering guest users
- @return If true guest successfully registered.
- */
-- (BOOL) registerWithGuestId:(NSString *_Nullable) guestId;
-
-- (void)unregisterUser;
+- (BOOL) logout;
 
 - (NSString*)getInstallationId;
 
@@ -842,117 +840,7 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 
 
 
-
-
-
-
-
-/*
- * =============================================================
- * =========================================== Notification APIs
- * =============================================================
- */
-
-#pragma mark - Notification APIs
-
-/*!
- * Handle the device token
- * @param application The application instance
- * @param deviceToken The device token
- */
-- (void)application:(UIApplication *)application
-        didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken NS_AVAILABLE_IOS(3_0);
-
-
-/*!
- * Hook and Handle notification Settings
- * @param application The application instance
- * @param notificationSettings notification settings
- */
-- (void)application:(UIApplication *)application
-        didRegisterUserNotificationSettings:
-                (UIUserNotificationSettings *)notificationSettings NS_AVAILABLE_IOS(8_0);
-
-
-/**
- * Handle received notification
- * @param application The application instance
- * @param userInfo The payload
- *
- */
-- (void)application:(UIApplication *)application
-        didReceiveRemoteNotification:(NSDictionary *)userInfo NS_AVAILABLE_IOS(3_0);
-
-
-/*!
- * Handle received notification
- * @param application The application instance
- * @param userInfo The payload
- * @param completionHandler block for fetching data in background mode
- *
- */
-- (void)application:(UIApplication *)application
-        didReceiveRemoteNotification:(NSDictionary *)userInfo
-        fetchCompletionHandler:(void (^)(UIBackgroundFetchResult)) completionHandler NS_AVAILABLE_IOS(7_0);
-/*!
- * Handle failure to receive device token
- * @param application The application instance
- * @param error failure error
- *
- */
-- (void)application:(UIApplication *)application
-        didFailToRegisterForRemoteNotificationsWithError:(NSError *)error  NS_AVAILABLE_IOS(5_0);
-
-
-/*!
- * This method should be called within UIApplicationDelegate's application method.
- * - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
- * @param launchOptions The launch options from the application hook
- * @return return YES if user touch notification in Notification Center while app is killed or terminted
- */
-- (BOOL)application:(UIApplication *)application
-        didFinishLaunchingWithOptions:(NSDictionary *)launchOptions NS_AVAILABLE_IOS(3_0);
-
-
-/*!
- * Handle received local notification
- * @param application The application instance
- * @param notification The notification payload
- *
- */
-- (void)application:(UIApplication *)application
-        didReceiveLocalNotification:(UILocalNotification *)notification NS_AVAILABLE_IOS(5_0);
-
-
-
-
-
-
-/*
- * =============================================================
- * ================================= Application Life Cycle APIs
- * =============================================================
- */
-
-#pragma mark - Application Life Cycle APIs
-
-- (void)applicationDidBecomeActive:(UIApplication *)application;
-
-- (void)applicationDidEnterBackground:(UIApplication *)application;
-
-- (void)applicationWillEnterForeground:(UIApplication *)application;
-
-- (void)applicationWillResignActive:(UIApplication *)application;
-
-- (void)applicationWillTerminate:(UIApplication *)application;
-
 - (void)removeAppLifeCyclesFunctionality;
-
-
-
-
-
-
 
 /*
  * =============================================================
@@ -974,6 +862,22 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 // Call this method in your app Notification Service Extension
 - (void)didReceiveNotificationRequest:(UNNotificationRequest *)request withContentHandler:(void (^)(UNNotificationContent * _Nonnull))contentHandler;
 
+/**
+ Call this method in your app Notification Service Extension.
+ 
+
+ @param mutableNotificationContent is a mutable copy of content in UNNotificationRequest.
+ for example:
+ 
+    //objective-c:
+    [PushClientManager.defaultManager didReceiveNotificationContent:[request.content mutableCopy]
+                                        withContentHandler:contentHandler];
+ 
+ @param contentHandler for show notification after download attached data.
+ */
+- (void)didReceiveNotificationContent:(UNMutableNotificationContent *_Nonnull)mutableNotificationContent
+                   withContentHandler:(void (^_Nonnull)(UNNotificationContent * _Nonnull))contentHandler;
+
 #pragma mark - Screen view
 
 /**
@@ -993,7 +897,15 @@ NS_CLASS_AVAILABLE_IOS(7_0)
  @param trackName is tracker name. It could be Purchase for click on special button
  @param data for trackName.
  */
--(void) track:(NSString *) trackName data:(NSDictionary *) data;
+-(void) track:(NSString * _Nonnull) trackName data:(NSDictionary * _Nullable) data;
+
+
+/**
+Track user revenue realtime.
+
+@param revenue of user
+*/
+-(void) trackRevenue:(double) revenue;
 
 /**
  Track user revenue realtime.
@@ -1001,16 +913,9 @@ NS_CLASS_AVAILABLE_IOS(7_0)
  @param event name
  @param chabokEvent contains revenue and currency
  */
--(void) trackPurchase:(NSString *) event chabokEvent:(ChabokEvent *) chabokEvent;
+-(void) trackPurchase:(NSString * _Nonnull) event chabokEvent:(ChabokEvent * _Nonnull) chabokEvent;
 #pragma mark - Deeplink
 
-
-/**
- This method for sending attribution information in deeplinks
-
- @param url deeplinks url
- */
--(void) appWillOpenUrl:(NSURL *) url;
 
 
 /**

@@ -3,9 +3,9 @@
 'use strict';
 
 /**
- * This hook makes sure projects using [cordova-plugin-firebase](https://github.com/arnesson/cordova-plugin-firebase)
- * will build properly and have the required key files copied to the proper destinations when the app is build on Ionic Cloud using the package command.
- * Credits: https://github.com/arnesson.
+ * This hook makes sure projects using [io.chabok.cordovaplugin](https://github.com/farbod-s/Cordova-Plugin
+ * will build properly and have the required key files copied to the proper destinations.
+ * Credits: https://github.com/farbod-s.
  */
 var fs = require('fs');
 var path = require('path');
@@ -59,11 +59,11 @@ module.exports = function (context) {
   var platforms = context.opts.platforms;
   // Copy key files to their platform specific folders
   if (platforms.indexOf('ios') !== -1 && utilities.directoryExists(IOS_DIR)) {
-    console.log('Preparing Firebase on iOS');
+    console.log('Preparing Chabok on iOS');
     utilities.copyKey(PLATFORM.IOS);
   }
   if (platforms.indexOf('android') !== -1 && utilities.directoryExists(ANDROID_DIR)) {
-    console.log('Preparing Firebase on Android');
+    console.log('Preparing Chabok on Android');
     utilities.copyKey(PLATFORM.ANDROID);
   }
 };

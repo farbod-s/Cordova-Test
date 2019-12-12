@@ -4,5 +4,5 @@ platform :ios, '10.0'
 use_frameworks!
 target 'HelloCordova' do
 	project 'HelloCordova.xcodeproj'
-	pod 'ChabokPush', '~> 1.19.0'
+	pod 'ChabokPush', '~> 2.0.1'
 end

@@ -190,6 +190,8 @@ typedef NSDictionary *_Nullable(^customizeGeoDataCompletion)(CLLocation * _Nulla
  */
 -(instancetype _Nonnull ) initWithAutorization:(locationAutorizationEnumType) autorizationType;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
 /**
  * @description addDelegate method purpose for multi delegation and callback support,
  * and add new delegate object in delegate objects list
@@ -206,6 +208,8 @@ typedef NSDictionary *_Nullable(^customizeGeoDataCompletion)(CLLocation * _Nulla
  * @author AdpDigital co.
  */
 -(void) removeDelegate:(id<CoreGeoLocationDelegate>) delegate;
+
+#pragma clang diagnostic pop
 
 /**
  * Get access to Location with 2 type authorization

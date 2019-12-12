@@ -14,7 +14,7 @@
     "libraries": {
         "ChabokPush": {
             "name": "ChabokPush",
-            "spec": "~> 1.19.0",
+            "spec": "~> 2.0.1",
             "count": 1
         }
     }

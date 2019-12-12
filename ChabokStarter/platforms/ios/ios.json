@@ -54,6 +54,6 @@
   ],
   "plugin_metadata": {
     "cordova-plugin-whitelist": "1.3.4",
-    "io.chabok.cordovaplugin": "1.0.8"
+    "io.chabok.cordovaplugin": "1.1.1"
   }
 }

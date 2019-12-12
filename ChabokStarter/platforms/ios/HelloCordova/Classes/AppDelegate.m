@@ -27,11 +27,15 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import <AdpPushClient/AdpPushClient.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+    [PushClientManager.defaultManager configureEnvironment:Sandbox];
+    [PushClientManager.defaultManager addDelegate:self]; //Optional
+    
     self.viewController = [[MainViewController alloc] init];
     return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }

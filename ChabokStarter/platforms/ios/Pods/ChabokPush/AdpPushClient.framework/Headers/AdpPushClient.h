@@ -18,7 +18,7 @@ FOUNDATION_EXPORT const unsigned char AdpPushClientVersionString[];
 
 #import <AdpPushClient/PushClientManager.h>
 #import <AdpPushClient/PushClientMessage.h>
-#import <AdpPushClient/DeliveryMessage.h>
+#import <AdpPushClient/PushClientDeliveryMessage.h>
 #import <AdpPushClient/EventMessage.h>
 #import <AdpPushClient/CoreGeoLocation.h>
 #import <AdpPushClient/PushClientServerReachability.h>

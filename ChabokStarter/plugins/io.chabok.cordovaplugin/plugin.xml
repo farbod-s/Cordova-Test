@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="io.chabok.cordovaplugin"
-        version="1.0.8"
+        version="1.1.1"
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android">
     <name>AdpPushClient</name>
@@ -34,6 +34,8 @@
                      target="AndroidManifest.xml" />
         <source-file src="src/android/AdpPushClient.java"
                      target-dir="src/io/chabok/cordovaplugin/AdpPushClient" />
+        <source-file src="src/android/ChabokApplication.java"
+                     target-dir="src/io/chabok/cordovaplugin/AdpPushClient" />
         
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <meta-data android:name="com.adpdigital.push.client.PlatformType"
@@ -58,8 +60,6 @@
             </feature>
         </config-file>
         <source-file src="src/ios/AdpPushClient.m" />
-        <source-file src="src/ios/AppDelegate+AdpPushClient.m" />
-        <header-file src="src/ios/AppDelegate+AdpPushClient.h" />
 
         <config-file target="*-Info.plist" parent="UIBackgroundModes">
             <array>
@@ -77,10 +77,10 @@
                 <source url="https://github.com/CocoaPods/Specs.git"/>
             </config>
             <pods use-frameworks="true">
-                <pod name="ChabokPush" spec="~> 1.19.0"/>
+                <pod name="ChabokPush" spec="~> 2.0.1"/>
             </pods>
         </podspec>
     </platform>
-    <hook type="after_prepare" src="hooks/android_app.js" />
+    <hook type="after_plugin_add" src="hooks/generate_app.js" />
     <hook type="after_prepare" src="hooks/generate_configs.js" />
 </plugin>
