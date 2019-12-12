@@ -17,7 +17,7 @@
        under the License.
  */
 
-package io.chabok.starter.cordova;
+package com.adpdigital.chabok.starter;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

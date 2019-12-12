@@ -39,53 +39,42 @@ var app = {
 
         console.log('cordova.plugins = ', JSON.stringify(chabok));
 
-        options = {appId: 'adp-nms-push/845225163503', apiKey: 'e2100f0d7e071c7450f04e530bda746da2fc493b', username: 'adp', password: 'test', devMode: true }
-        console.log('----- options = ', options);
-
-        chabok.init(options, function (s) {
-            console.log('Initialize successfully. s = ' + s);
-        }, function (err) {
-            console.error('Could not initialize = ' + err);
-        });
-
-        chabok.getUserId(function (userId) {
-            console.log('-- Call register method');
-            chabok.register(userId, function (s){
-                console.log('Registered user successfully, s = ' + s);
-
-                chabok.track('registerAgain', {id: 123});
-                //
-                chabok.addTag('CORDOVA-AGAIN');
-                //
-                // chabok.setUserInfo({firstName: 'Hussein'});
-            }, function (e){
-                console.error('Fail to register user = ' + JSON.stringify(e));
-            });
-        }, function (error) {
-            chabok.registerAsGuest(function(s){
-                console.log('------------------ Registered successfully, s = ' + s);
-
-                chabok.track('guestUser', {id: 123});
-                chabok.addTag('CORDOVA');
-                //
-                // chabok.setUserInfo({firstName: 'Hussein'});
-            }, function(e){
-                console.error('----------------- Fail to register = ' + e);
-            });
-        })
+        console.log('CHABOK INITIALIZED SUCCESSFULLY');
     },
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        // var parentElement = document.getElementById(id);
-        // var listeningElement = parentElement.querySelector('.listening');
-        // var receivedElement = parentElement.querySelector('.received');
-
-        // listeningElement.setAttribute('style', 'display:none;');
-        // receivedElement.setAttribute('style', 'display:block;');
-
         console.log('Received Event: ' + id);
         console.log('!!!!!!!!!!! DOM is READY !!!!!!!!!!');
+
+        document.getElementById("btnRegister").addEventListener("click", function() {
+            var userId = document.getElementById("txtUserId").value;
+            if (userId !== undefined && userId != null && userId != "") {
+                console.log('######### Login button clicked! #########');
+                chabok.login(userId);
+            }
+        });
+
+        document.getElementById("btnUnregister").addEventListener("click", function() {
+            console.log('######### Logout button clicked! #########');
+            chabok.logout();
+        });
+
+        document.getElementById("btnAddTag").addEventListener("click", function() {
+            var tag = document.getElementById("txtTagName").value;
+            if (tag !== undefined && tag != null && tag != "") {
+                console.log('######### Add Tag button clicked! #########');
+                chabok.addTag(tag);
+            }
+        });
+
+        document.getElementById("btnRemoveTag").addEventListener("click", function() {
+            var tag = document.getElementById("txtTagName").value;
+            if (tag !== undefined && tag != null && tag != "") {
+                console.log('######### Remove Tag button clicked! #########');
+                chabok.removeTag(tag);
+            }
+        });
 
         document.getElementById("btnAddToCard").addEventListener("click", function() {
             console.log('######### AddToCart button clicked! #########');
@@ -117,7 +106,7 @@ var app = {
                 && _gender !== undefined && _gender != null && _gender != "") {
                 
                 console.log('@@@@@@@@@@ send User Info @@@@@@@@@@');
-                chabok.setUserInfo({firstName: _firstName, lastName: _lastName, gender: _gender});
+                chabok.setUserAttributes({firstName: _firstName, lastName: _lastName, gender: _gender});
             }
         });
     }

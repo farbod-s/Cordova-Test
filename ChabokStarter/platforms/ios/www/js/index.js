@@ -17,6 +17,8 @@
  * under the License.
  */
 
+var chabok;
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -31,7 +33,7 @@ var app = {
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
 
-        const chabok = new AdpPushClient();
+        chabok = new AdpPushClient();
 
         console.log('------------------');
 

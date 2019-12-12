@@ -21,21 +21,22 @@ apply plugin: 'com.android.application'
 
 buildscript {
     repositories {
-        mavenCentral()
         google()
         jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.android.tools.build:gradle:3.5.3'
     }
 }
 
 // Allow plugins to declare Maven dependencies via build-extras.gradle.
 allprojects {
     repositories {
-        mavenCentral()
+        google()
         jcenter()
+        mavenCentral()
     }
 }
 
@@ -98,7 +99,7 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "../io.chabok.cordovaplugin/cordova-build.gradle"
+apply from: "../io.chabok.cordovaplugin/starter-build.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras1 = file('build-extras.gradle').exists()
@@ -295,7 +296,7 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
     implementation "me.leolin:ShortcutBadger:1.1.22@aar"
-    implementation "com.google.android.gms:play-services-gcm:10.2.6"
+    implementation "com.google.firebase:firebase-messaging:17.1.0"
     implementation "com.android.installreferrer:installreferrer:1.0"
     // SUB-PROJECT DEPENDENCIES END
 }

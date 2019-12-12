@@ -3,28 +3,18 @@ var exec = require('cordova/exec');
 const  bridgeName = 'AdpPushClient';
 var AdpPushClient = function () {}
 
-AdpPushClient.prototype.init = function (options, success, error) {
-    // var params = Array.from(Object.values(options));
-    var params = [];
-    for (opt in options) {
-        params[params.length] = options[opt];
-        console.log(params[params.length - 1]);
-    }
-    exec(success, error, bridgeName, 'init', params);
+AdpPushClient.prototype.setDevelopmentMode = function (devMode, success, error) {
+    exec(success, error, bridgeName, 'setDevelopmentMode', [devMode]);
 };
 
-AdpPushClient.prototype.registerAsGuest = function (success, error) {
-    exec(success, error, bridgeName, 'registerAsGuest');
+AdpPushClient.prototype.login = function (userId, success, error) {
+    exec(success, error, bridgeName, 'login', [userId]);
 };
 
-AdpPushClient.prototype.register = function (userId, success, error) {
-    exec(success, error, bridgeName, 'register', [userId]);
-};
-
-AdpPushClient.prototype.unregister = function () {
+AdpPushClient.prototype.logout = function () {
     exec(function () {
     }, function () {
-    }, bridgeName, 'unregister', []);
+    }, bridgeName, 'logout', []);
 };
 
 AdpPushClient.prototype.addTag = function (tagName, success, error) {
@@ -41,14 +31,14 @@ AdpPushClient.prototype.appWillOpenUrl = function (url) {
     }, bridgeName, 'appWillOpenUrl', [url]);
 };
 
-AdpPushClient.prototype.getUserInfo = function (success, error) {
-    exec(success, error, bridgeName, 'getUserInfo', []);
+AdpPushClient.prototype.getUserAttributes = function (success, error) {
+    exec(success, error, bridgeName, 'getUserAttributes', []);
 };
 
-AdpPushClient.prototype.setUserInfo = function (userInfo) {
+AdpPushClient.prototype.setUserAttributes = function (userInfo) {
     exec(function () {
     }, function () {
-    }, bridgeName, 'setUserInfo', [userInfo]);
+    }, bridgeName, 'setUserAttributes', [userInfo]);
 };
 
 AdpPushClient.prototype.setDefaultTracker = function (trackerName) {

@@ -11,6 +11,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
   ];
   module.exports.metadata = {
     "cordova-plugin-whitelist": "1.3.4",
-    "io.chabok.cordovaplugin": "1.0.6"
+    "io.chabok.cordovaplugin": "1.0.8"
   };
 });

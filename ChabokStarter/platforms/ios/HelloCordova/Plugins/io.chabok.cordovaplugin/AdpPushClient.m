@@ -33,10 +33,9 @@ void failureCallback(NSString* callbackId, NSDictionary* data) {
 @property (nonatomic, retain) NSString *onConnectionStatusCallback;
 //@property (nonatomic, retain) NSString *notificationOpenedCallback;
 
--(void)init:(CDVInvokedUrlCommand *)command;
--(void)registerAsGuest:(CDVInvokedUrlCommand *)command;
--(void)register:(CDVInvokedUrlCommand *)command;
--(void) unregister:(CDVInvokedUrlCommand *)command;
+-(void) setDevelopmentMode:(CDVInvokedUrlCommand *)command;
+-(void) login:(CDVInvokedUrlCommand *)command;
+-(void) logout:(CDVInvokedUrlCommand *)command;
 
 -(void) getUserId:(CDVInvokedUrlCommand *) command;
 -(void) getInstallationId:(CDVInvokedUrlCommand *) command;
@@ -58,29 +57,18 @@ void failureCallback(NSString* callbackId, NSDictionary* data) {
 //@dynamic coldStartNotificationResult;
 //static NSDictionary *_coldStartNotificationResult;
 
--(void)init:(CDVInvokedUrlCommand*)command {
-    
-    BOOL devMode = [command.arguments objectAtIndex:4];
-    NSString *appId = [command.arguments objectAtIndex:0];
-    NSString *apiKey = [command.arguments objectAtIndex:1];
-    NSString *username = [command.arguments objectAtIndex:2];
-    NSString *password = [command.arguments objectAtIndex:3];
-    
-    if (!appId || !apiKey || !username || !password) {
-        NSLog(@"Invalid initialize parameters.");
-    }
-    
-    [PushClientManager setDevelopment:devMode];
-    [PushClientManager.defaultManager setEnableLog:YES];
-    [PushClientManager.defaultManager addDelegate:self];
+-(void)pluginInitialize {
+    NSLog(@"Starting Chabok plugin");
+}
 
-    NSArray *appIds = [appId componentsSeparatedByString:@"/"];
-    self.appId = appIds.firstObject;
+-(void)setDevelopmentMode:(CDVInvokedUrlCommand*)command {
+    BOOL devMode = [command.arguments objectAtIndex:0];
+    NSInteger chabokEnv = devMode ? 0 : 1;
+
+    [PushClientManager.defaultManager addDelegate:self];
+    [PushClientManager.defaultManager setLogLevel:ChabokLogLevelVerbose];
     
-    BOOL state = [PushClientManager.defaultManager registerApplication:self.appId
-                                                                apiKey:apiKey
-                                                              userName:username
-                                                              password:password];
+    BOOL state = [PushClientManager.defaultManager configureEnvironment:chabokEnv];
     
     CDVPluginResult* pluginResult = nil;
     if (state) {
@@ -95,9 +83,6 @@ void failureCallback(NSString* callbackId, NSDictionary* data) {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:msg];
     }
 
-    //[PushClientManager.defaultManager application:UIApplication.sharedApplication
-    //                didFinishLaunchingWithOptions:nil];
-    
     if (!command.callbackId) {
         return;
     }
@@ -107,19 +92,7 @@ void failureCallback(NSString* callbackId, NSDictionary* data) {
 
 #pragma mark - Register
 
--(void)registerAsGuest:(CDVInvokedUrlCommand*)command {
-    NSLog(@"--------------------- registerAsGuest command = %@ , callbackId = %@", command, command.callbackId);
-    NSString *callbackId = command.callbackId;
-    NSLog(@"--------------------- registerAsGuest callbackId = %@ && type = %@", callbackId, [callbackId class]);
-
-//    _onRegisterCallback = @"TESTT";
-    [self setOnRegisterCallback:command];
-    NSLog(@"--------------------- registerAsGuest onRegisterCallback = %@", _onRegisterCallback);
-    
-    BOOL state = [PushClientManager.defaultManager registerAsGuest];
-}
-
--(void)register:(CDVInvokedUrlCommand*)command {
+-(void)login:(CDVInvokedUrlCommand*)command {
     CDVPluginResult* pluginResult = nil;
     
     NSString *userId = [command.arguments objectAtIndex:0];
@@ -131,7 +104,7 @@ void failureCallback(NSString* callbackId, NSDictionary* data) {
         return;
     }
     
-    BOOL state = [PushClientManager.defaultManager registerUser:userId
+    BOOL state = [PushClientManager.defaultManager login:userId
                                                        channels:@[] registrationHandler:^(BOOL isRegistered, NSString *userId, NSError *error) {
                                                            CDVPluginResult* pluginResult = nil;
 
@@ -171,8 +144,8 @@ void failureCallback(NSString* callbackId, NSDictionary* data) {
 
 #pragma mark - unregister
 
--(void) unregister:(CDVInvokedUrlCommand*)command {
-    [PushClientManager.defaultManager unregisterUser];
+-(void) logout:(CDVInvokedUrlCommand*)command {
+    [PushClientManager.defaultManager logout];
 }
 
 #pragma mark - user
@@ -339,17 +312,17 @@ void failureCallback(NSString* callbackId, NSDictionary* data) {
 -(void) setDefaultTracker:(CDVInvokedUrlCommand *) command {
     NSString *defaultTracker = [command.arguments objectAtIndex:0];
 
-    [PushClientManager.defaultManager setDefaultTracker:defaultTracker];;
+    [PushClientManager.defaultManager setDefaultTracker:defaultTracker];
 }
 
 #pragma mark - userInfo
--(void) setUserInfo:(CDVInvokedUrlCommand *) command {
+-(void) setUserAttributes:(CDVInvokedUrlCommand *) command {
     NSDictionary *userInfo = [command.arguments objectAtIndex:0];
 
-    [PushClientManager.defaultManager setUserInfo:userInfo];;
+    [PushClientManager.defaultManager setUserAttributes:userInfo];
 }
 
--(void) getUserInfo:(CDVInvokedUrlCommand *) command {
+-(void) getUserAttributes:(CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSDictionary *userInfo = PushClientManager.defaultManager.userInfo;
     

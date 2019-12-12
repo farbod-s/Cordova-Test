@@ -1,8 +1,8 @@
 {
   "_from": "io.chabok.cordovaplugin",
-  "_id": "io.chabok.cordovaplugin@1.0.6",
+  "_id": "io.chabok.cordovaplugin@1.0.8",
   "_inBundle": false,
-  "_integrity": "sha512-DUpE+Q0GwOQK0UN+mlqbYK5afzZ0iV4bEJ30qMtrd3px1KosW0Dd4VTlvmdcgXwT9bUwtiYRjgnNtIFM7vVfxw==",
+  "_integrity": "sha512-faB+UHB04yHnrEK83mhdJv+UbC4026aGG1sa4f+WhU2GoRPeTpQRGKHPGJsrcBCP6XtOTugUwHQ0a9TJ2e2Jng==",
   "_location": "/io.chabok.cordovaplugin",
   "_phantomChildren": {},
   "_requested": {
@@ -19,8 +19,8 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/io.chabok.cordovaplugin/-/io.chabok.cordovaplugin-1.0.6.tgz",
-  "_shasum": "1d8c415e633e2914c25a4965222fda650b600786",
+  "_resolved": "https://registry.npmjs.org/io.chabok.cordovaplugin/-/io.chabok.cordovaplugin-1.0.8.tgz",
+  "_shasum": "39b9bbbf6ddd9c370565d0f280f3ab8a29844b7c",
   "_spec": "io.chabok.cordovaplugin",
   "_where": "/Users/farbod/Documents/Github/Cordova-Test/ChabokStarter",
   "author": {
@@ -51,5 +51,5 @@
     "type": "git",
     "url": "git+https://github.com/farbod-s/Cordova-Plugin.git"
   },
-  "version": "1.0.6"
+  "version": "1.0.8"
 }
